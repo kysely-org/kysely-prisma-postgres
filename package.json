@@ -53,6 +53,7 @@
 		"@prisma/ppg": "^0.5.2",
 		"@types/node": "^24.3.0",
 		"kysely": "^0.28.5",
+		"std-env": "^3.9.0",
 		"tsup": "^8.5.0",
 		"typescript": "^5.9.2",
 		"vitest": "^3.2.4"
