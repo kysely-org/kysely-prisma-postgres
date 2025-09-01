@@ -1,5 +1,8 @@
+import { loadEnvFile } from 'node:process'
 import { isCI } from 'std-env'
 import { defineConfig } from 'vitest/config'
+
+loadEnvFile()
 
 export default defineConfig({
 	test: {
