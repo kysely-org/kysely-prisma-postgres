@@ -56,7 +56,7 @@ jobs:
         run: pnpm build
 
       - name: Test
-        run: CONNECTION_STRING=${{ steps.create-db.database_url }} pnpm test
+        run: CONNECTION_STRING=${{ steps.create-db.outputs.database_url }} pnpm test
 
       - name: Delete Prisma Postgres Database
         if: always() && steps.create-db.outputs.database_url != ''
