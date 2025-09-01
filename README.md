@@ -1,3 +1,5 @@
+![A Kysely-branded yellow duck riding a Prisma Postgres branded grey elephant](./assets//banner.png)
+
 [![NPM Version](https://img.shields.io/npm/v/kysely-prisma-postgres?style=flat&label=latest)](https://github.com/kysely-org/kysely-prisma-postgres/releases/latest)
 [![Tests](https://github.com/kysely-org/kysely-prisma-postgres/actions/workflows/test.yml/badge.svg)](https://github.com/kysely-org/kysely-prisma-postgres)
 [![License](https://img.shields.io/github/license/kysely-org/kysely-prisma-postgres?style=flat)](https://github.com/kysely-org/kysely-prisma-postgres/blob/master/LICENSE)
@@ -12,8 +14,6 @@
 [![Bluesky](https://img.shields.io/badge/Bluesky-0285FF?style=flat&logo=Bluesky&logoColor=white)](https://bsky.app/profile/kysely.dev)
 
 `kysely-prisma-postgres` offers a [Kysely](https://kysely.dev/) dialect for [Prisma Postgres (PPG)](https://www.prisma.io/postgres), enabling type-safe SQL queries over HTTP.
-
-For non
 
 ## Installation
 
