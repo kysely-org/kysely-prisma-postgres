@@ -1,0 +1,67 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  cancel-in-progress: false
+  group: ${{ github.workflow }}
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 24]
+    env:
+      DATABASE_NAME: github-workflow-node-${{ matrix.node-version }}
+    name: Node.js ${{ matrix.node-version }}
+
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Create Prisma Postgres Database
+        id: create-db
+        uses: prisma/create-prisma-postgres-database-action@2b8112ca2f9092c391ccff6ec763e629edc39c72 # v1.0.1
+        with:
+          database_name: ${{ env.DATABASE_NAME }}
+          project_id: ${{ vars.PRISMA_PROJECT_ID }}
+          service_token: ${{ secrets.PRISMA_POSTGRES_SERVICE_TOKEN }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: CONNECTION_STRING=${{ steps.create-db.database_url }} pnpm test
+
+      - name: Delete Prisma Postgres Database
+        if: always() && steps.create-db.outputs.database_url != ''
+        uses: prisma/delete-prisma-postgres-database-action@6eff9acaba4d574eef79defedb374368b4d95f45 # v1.0.1
+        with:
+          database_name: ${{ env.DATABASE_NAME }}
+          project_id: ${{ vars.PRISMA_PROJECT_ID }}
+          service_token: ${{ secrets.PRISMA_POSTGRES_SERVICE_TOKEN }}
