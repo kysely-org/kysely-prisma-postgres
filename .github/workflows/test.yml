@@ -60,7 +60,7 @@ jobs:
 
       - name: Delete Prisma Postgres Database
         if: always() && steps.create-db.outputs.database_url != ''
-        uses: prisma/delete-prisma-postgres-database-action@6eff9acaba4d574eef79defedb374368b4d95f45 # v1.0.1
+        uses: prisma/delete-prisma-postgres-database-action@d1d5b7370f73ea700555681f48b0ae5061753d33 # v1.0.2
         with:
           database_name: ${{ env.DATABASE_NAME }}
           project_id: ${{ vars.PRISMA_PROJECT_ID }}
