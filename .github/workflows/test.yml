@@ -34,7 +34,7 @@ jobs:
 
       - name: Create Prisma Postgres Database
         id: create-db
-        uses: prisma/create-prisma-postgres-database-action@2b8112ca2f9092c391ccff6ec763e629edc39c72 # v1.0.1
+        uses: prisma/create-prisma-postgres-database-action@d9b96d94f9b94e1da958cb5202ec35a849cdb3b2 # v1.0.3
         with:
           database_name: ${{ env.DATABASE_NAME }}
           project_id: ${{ vars.PRISMA_PROJECT_ID }}
